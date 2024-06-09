@@ -44,4 +44,37 @@ router.delete('/:id', auth, async (req, res) => {
     }
 });
 
+
+router.put('/:id', async (req, res) => {
+    try {
+      const expenseId = req.params.id;
+      const updatedExpenseData = req.body;
+      
+      const updatedExpense = await Expense.findByIdAndUpdate(
+        expenseId,
+        updatedExpenseData,
+        { new: true }
+      );
+  
+      if (!updatedExpense) {
+        return res.status(404).json({ message: 'Expense not found' });
+      }
+  
+      res.status(200).json(updatedExpense);
+    } catch (err) {
+      console.error('Error updating expense:', err);
+      res.status(500).json({ message: 'Error updating expense' });
+    }
+  });
+  
+  // Get expense by ID
+router.get('/:id', async (req, res) => {
+    const expenseId = req.params.id;
+  
+    let result=await Expense.findById(expenseId)
+    if(!result){
+        return res.status(404).json({ message: 'Expense not found' });
+      }
+      res.status(200).json({"res":result});
+  });
 module.exports = router;
