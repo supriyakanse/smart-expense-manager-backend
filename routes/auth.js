@@ -37,7 +37,7 @@ router.post('/login', async (req, res) => {
         const payload = { user: { id: user.id }};
         jwt.sign(payload, 'secret', { expiresIn: 3600 }, (err, token) => {
             if (err) throw err;
-            res.json({ token });
+            res.json({ "token":token ,"user":user.id});
         });
     } catch (err) {
         console.error(err.message);
