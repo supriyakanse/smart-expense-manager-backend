@@ -24,9 +24,6 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// @route   GET api/budgets
-// @desc    Get all budgets for the user
-// @access  Private
 router.get('/', auth, async (req, res) => {
   try {
     const budgets = await Budget.find({ user: req.user.id }).sort({ createdAt: -1 });
